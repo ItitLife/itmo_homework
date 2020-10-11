@@ -1,15 +1,18 @@
 package lesson7.hw1;
 
 public class Director extends Human {
-    public Director(String name, int age) {
-        super(name, age);
+    static boolean day;
+    public Director() {
+        super();
+        age = this.age = 40 + (int) (Math.random() * 40);
     }
 
-    public boolean startDay() {
-        return true;
+    public void startDay(School school) {
+        day = true;
+        school.newDay();
     }
 
-    public boolean finishDay() {
-        return true;
+    public void finishDay() {
+        day = false;
     }
 }
