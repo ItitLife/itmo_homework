@@ -8,7 +8,6 @@ public class School {
     private Teacher[] teachers = new Teacher[5];
     private Student[] students = new Student[20];
     Scanner scanner = new Scanner(System.in);
-    int ans = 1;
 
     public School(final String name, Director director) {
         if (name.length() < 3) {
@@ -31,7 +30,7 @@ public class School {
             for (Teacher teacher : teachers) {
                 for (int j = 0; j < students.length; j++) {
                     int r = (int) (Math.random() * students.length);
-                    if (teacher.subject == students[r].subject) {
+                    if (teacher.subject.equals(students[r].subject)) {
                         teacher.teach(students[r]);
                         break;
                     }
@@ -59,7 +58,7 @@ public class School {
 
     public void studyLevelInfo() {
         for (Student student : students) {
-            System.out.println(student.name + "/" + student.age + ": " + student.studyLevel);
+            System.out.println(student.name + "/" + student.age + ": " + student.getStudyLevel());
         }
     }
 

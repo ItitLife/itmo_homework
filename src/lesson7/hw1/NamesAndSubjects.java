@@ -2,7 +2,7 @@ package lesson7.hw1;
 
 public class NamesAndSubjects {
     public static String getName(){
-        String[] names = new String[]{"ivan", "petr", "nikolay", "stepan", "fedor", "savva", "georg", "iren", "maria", "anna", "lisa", "ksenia", "valeryi"};
+        String[] names = new String[]{"ivan", "petr", "nikolay", "stepan", "fedor", "savva", "georg", "iren", "maria", "anna", "lisa", "ksenia", "valerii"};
         return names[(int) (Math.random() * names.length)];
     }
     public static String getSubject(){

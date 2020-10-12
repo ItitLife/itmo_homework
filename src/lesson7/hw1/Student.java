@@ -1,7 +1,7 @@
 package lesson7.hw1;
 
 public class Student extends Plebeians implements StudyAble{
-    int studyLevel;
+    private int studyLevel;
 
     public Student() {
         super();

@@ -1,6 +1,6 @@
 package lesson7.hw1;
 
-public class Director extends Human {
+final public class Director extends Human {
     static boolean day;
     public Director() {
         super();

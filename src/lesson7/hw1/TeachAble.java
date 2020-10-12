@@ -1,7 +1,7 @@
 package lesson7.hw1;
 
 public interface TeachAble {
-    default void teach(Student student){
+    default void teach(StudyAble student){
         student.study();
     };
 }
