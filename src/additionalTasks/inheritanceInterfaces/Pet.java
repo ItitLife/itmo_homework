@@ -8,7 +8,7 @@ package additionalTasks.inheritanceInterfaces;
 Домашнее животное может убежать от дикого животного, если его скорость больше.
 Домашнее животное может восполнять здоровье (+1, но не больше изначального).
 Животные восполняют здоровье во время кормления.*/
-public class Pet extends Animal {
+public class Pet extends Animal implements FeedingAble{
     int health;
     int resources;
     int maxHealth;
@@ -53,4 +53,8 @@ public class Pet extends Animal {
         return pet;
     }
 
+    @Override
+    public void feeding() {
+
+    }
 }

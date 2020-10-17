@@ -10,6 +10,7 @@ public class Farmer {
     Pet[] pets = new Pet[10];
 
 
+
     public void checkForResources(){
         for (int i = 0; i < pets.length; i++) {
             if (!pets[i].isDead() && pets[i].resources != 0){
@@ -27,5 +28,7 @@ public class Farmer {
             pets[i] = Pet.getPet();
         }
     }
+
+
 
 }

@@ -9,7 +9,7 @@ public class School {
     private Student[] students = new Student[20];
     Scanner scanner = new Scanner(System.in);
 
-    public School(final String name, Director director) {
+    public School(String name, Director director) {
         if (name.length() < 3) {
             System.out.println("Название школы должно быть больше 3 символов");
             return;
