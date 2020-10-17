@@ -5,13 +5,21 @@ import java.time.LocalTime;
 import java.util.Arrays;
 
 public class Fitness {
-    private static final LocalTime open = LocalTime.of(0, 00);
-    private static final LocalTime close = LocalTime.of(23, 59);
+    private static final LocalTime open = LocalTime.of(8, 00);
+    private static final LocalTime close = LocalTime.of(22, 00);
 
     private static Ticket[] pool = new Ticket[20];
     private static Ticket[] gym = new Ticket[20];
     private static Ticket[] groupClass = new Ticket[20];
 
+
+    public static LocalTime getOpen() {
+        return open;
+    }
+
+    public static LocalTime getClose() {
+        return close;
+    }
 
     public static void welcomeClient(Ticket ticket) {
         if (LocalTime.now().isBefore(close) && LocalTime.now().isAfter(open)) {
@@ -43,7 +51,7 @@ public class Fitness {
                 }
             }
             System.out.println("В бассейне нет мест");
-            System.out.println(Arrays.toString(pool));
+            //System.out.println(Arrays.toString(pool));
             return;
 
         } else System.out.println("Ваш абонемент не позволяет посещать бассейн");
@@ -60,7 +68,7 @@ public class Fitness {
                 }
             }
             System.out.println("На групповых занятиях нет мест");
-            System.out.println(Arrays.toString(groupClass));
+            //System.out.println(Arrays.toString(groupClass));
             return;
         } else System.out.println("Ваш абонемент не позволяет посещать групповые занятия");
     }
@@ -75,7 +83,7 @@ public class Fitness {
             }
         }
         System.out.println("В тренажерном зале нет мест");
-        System.out.println(Arrays.toString(gym));
+        //System.out.println(Arrays.toString(gym));
         return;
 
     }

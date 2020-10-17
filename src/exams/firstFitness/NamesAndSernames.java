@@ -2,7 +2,7 @@ package exams.firstFitness;
 
 class NamesAndSernames {
     static String getName(){
-        String[] names = new String[]{"ivan", "petr", "nikolay", "stepan", "fedor", "savva", "georg", "iren", "maria", "anna", "lisa", "ksenia", "valerii"};
+        String[] names = new String[]{"ivan", "petr", "nikolay", "stepan", "fedor", "savva", "georg", "iren", "maria", "anna", "lisa", "ksenia", "valerii","yan","nekto"};
         return names[(int) (Math.random() * names.length)];
     }
 

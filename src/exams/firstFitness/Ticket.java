@@ -2,6 +2,7 @@ package exams.firstFitness;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Ticket {
@@ -84,10 +85,23 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return  "Посетитель: " +  client.toString() +
-                " Тип абонемента: " + type +
+        DateTimeFormatter frm = DateTimeFormatter.ofPattern("YYYY.MM.DD HH:MM");
+        String typeStr = "";
+        switch (type) {
+            case 0:
+                typeStr = "Разовый";
+                break;
+            case 1:
+                typeStr = "Дневной";
+                break;
+            case 2:
+                typeStr = "Полный";
+                break;
+        }
+        return "Посетитель: " + client.toString() +
+                " Тип абонемента: " + typeStr +
                 " Зона: " + client.getWish() +
-                " Дата и время посещения: " + LocalDateTime.now();
+                " Дата и время посещения: " + LocalDateTime.now().format(frm);
     }
 }
 
