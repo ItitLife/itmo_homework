@@ -75,7 +75,7 @@ public class Ticket {
     public static Ticket addTicket() {
         Ticket ticket = new Ticket(Fatty.addFatty(),
                 (int) (Math.random() * 3), false);
-        ticket.setStart(LocalDateTime.now().minusDays((int) (Math.random() * 2)));
+        ticket.setStart(LocalDateTime.now().minusHours((int) (Math.random() * 40)));
         if (ticket.getType() == 0) {
             ticket.setEnd(ticket.start.plusHours(24));
         } else if (ticket.getType() == 1 || ticket.getType() == 2)
@@ -85,7 +85,7 @@ public class Ticket {
 
     @Override
     public String toString() {
-        DateTimeFormatter frm = DateTimeFormatter.ofPattern("YYYY.MM.DD HH:MM");
+        DateTimeFormatter frm = DateTimeFormatter.ofPattern("YYYY.MM.dd HH:mm");
         String typeStr = "";
         switch (type) {
             case 0:

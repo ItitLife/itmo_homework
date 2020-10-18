@@ -2,29 +2,32 @@ package exams.firstFitness;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 public class Fitness {
-    private static final LocalTime open = LocalTime.of(8, 00);
-    private static final LocalTime close = LocalTime.of(22, 00);
+    private final LocalTime open = LocalTime.of(8, 00);
+    private final LocalTime close = LocalTime.of(22, 00);
+    private final LocalTime closeForDailyTicket = LocalTime.of(16, 00);
+    DateTimeFormatter frm = DateTimeFormatter.ofPattern("YYYY.MM.dd HH:mm");
 
-    private static Ticket[] pool = new Ticket[20];
-    private static Ticket[] gym = new Ticket[20];
-    private static Ticket[] groupClass = new Ticket[20];
+    private final Ticket[] pool = new Ticket[20];
+    private final Ticket[] gym = new Ticket[20];
+    private final Ticket[] groupClass = new Ticket[20];
 
 
-    public static LocalTime getOpen() {
+    public LocalTime getOpen() {
         return open;
     }
 
-    public static LocalTime getClose() {
+    public LocalTime getClose() {
         return close;
     }
 
-    public static void welcomeClient(Ticket ticket) {
+    public void welcomeClient(Ticket ticket) {
         if (LocalTime.now().isBefore(close) && LocalTime.now().isAfter(open)) {
             if (LocalDateTime.now().isAfter(ticket.getStart()) && LocalDateTime.now().isBefore(ticket.getEnd())) {
-                if (ticket.getType() == 1 && LocalTime.now().isAfter(LocalTime.of(16, 00))) {
+                if (ticket.getType() == 1 && LocalTime.now().isAfter(closeForDailyTicket)) {
                     System.out.println("Дневной абонемент не позволяет посещать фитнес-центр после 16:00");
                 } else {
                     if (ticket.getClient().getWish() != null) {
@@ -36,11 +39,14 @@ public class Fitness {
                             groupClassValidator(ticket);
                     }
                 }
-            } else System.out.println("Ваш абонемент не действителен.");
+            } else {
+                System.out.println("Ваш абонемент не действителен.");
+                System.out.println("Дата начала абонемента: " + ticket.getStart().format(frm) + " / Дата его окончания: " + ticket.getEnd().format(frm));
+            }
         } else System.out.println("Мы закрыты");
     }
 
-    private static void poolValidator(Ticket ticket) {
+    private void poolValidator(Ticket ticket) {
         if (ticket.getType() == 0 || ticket.getType() == 2) {
             for (int i = 0; i < pool.length; i++) {
                 if (pool[i] == null) {
@@ -57,7 +63,7 @@ public class Fitness {
         } else System.out.println("Ваш абонемент не позволяет посещать бассейн");
     }
 
-    private static void groupClassValidator(Ticket ticket) {
+    private void groupClassValidator(Ticket ticket) {
         if (ticket.getType() == 1 || ticket.getType() == 2) {
             for (int i = 0; i < groupClass.length; i++) {
                 if (groupClass[i] == null) {
@@ -73,7 +79,7 @@ public class Fitness {
         } else System.out.println("Ваш абонемент не позволяет посещать групповые занятия");
     }
 
-    private static void gymValidator(Ticket ticket) {
+    private void gymValidator(Ticket ticket) {
         for (int i = 0; i < gym.length; i++) {
             if (gym[i] == null) {
                 gym[i] = ticket;
@@ -85,35 +91,31 @@ public class Fitness {
         System.out.println("В тренажерном зале нет мест");
         //System.out.println(Arrays.toString(gym));
         return;
-
     }
 
-    public static void closeFitness() {
-        pool = new Ticket[20];
-        gym = new Ticket[20];
-        groupClass = new Ticket[20];
+    public void closeFitness() {
+        Arrays.fill(pool, null);
+        Arrays.fill(gym, null);
+        Arrays.fill(groupClass, null);
+        // подсказка среды. Я Arrays.fill() раньше не использовал)
     }
 
-    public static String getFitnessInfo() {
-        String str = "Тренажерный зал: " + Arrays.toString(gym) + "\n"
+    public String getFitnessInfo() {
+        return "Тренажерный зал: " + Arrays.toString(gym) + "\n"
                 + "Бассейн: " + Arrays.toString(pool) + "\n"
                 + "Групповые занятия" + Arrays.toString(groupClass);
-        return str;
     }
 
-    public static String getGymInfo() {
-        String str = "Тренажерный зал: " + Arrays.toString(gym);
-        return str;
+    public String getGymInfo() {
+        return "Тренажерный зал: " + Arrays.toString(gym);
     }
 
-    public static String getPoolInfo() {
-        String str = "Бассейн: " + Arrays.toString(pool);
-        return str;
+    public String getPoolInfo() {
+        return "Бассейн: " + Arrays.toString(pool);
     }
 
-    public static String getGroupClassInfo() {
-        String str = "Групповые занятия" + Arrays.toString(groupClass);
-        return str;
+    public String getGroupClassInfo() {
+        return "Групповые занятия" + Arrays.toString(groupClass);
     }
 }
 
