@@ -3,6 +3,7 @@ package exams.firstFitness;
 import java.util.Arrays;
 
 public class Logger {
+
     public static void getFitnessInfo(Fitness fitness){ System.out.println(fitness.getFitnessInfo()); }
 
     public static void getPoolInfo(Fitness fitness){
