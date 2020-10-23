@@ -1,4 +1,7 @@
 package lesson12.hw2;
+
+import lesson12.hw1.RandomExceptions;
+
 /*2. Создать массив исключений и заполнить его 9 различными runtime исключениями.
 Например,
 
@@ -12,8 +15,13 @@ package lesson12.hw2;
 */
 public class ExceptionsArr {
     public static void main(String[] args) {
-        Exception[] exceptions = new Exception[9];
-
+        RuntimeException[] exceptions = new RuntimeException[9];
+        for (int i = 0; i < exceptions.length; i++) {
+            exceptions[i] = RandomExceptions.getSomeRE();
+        }
+        for (Exception exception : exceptions) {
+            System.out.println(exception.toString());
+        }
 
     }
 }
