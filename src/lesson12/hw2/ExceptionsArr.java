@@ -14,7 +14,9 @@ import lesson12.hw1.RandomExceptions;
 и тд
 */
 public class ExceptionsArr {
-    public static void main(String[] args) {
+    public static RuntimeException[] reArr = new RuntimeException[9];
+
+    /*public static void main(String[] args) {
         RuntimeException[] exceptions = new RuntimeException[9];
         for (int i = 0; i < exceptions.length; i++) {
             exceptions[i] = RandomExceptions.getSomeRE();
@@ -22,6 +24,26 @@ public class ExceptionsArr {
         for (Exception exception : exceptions) {
             System.out.println(exception.toString());
         }
+    }*/
+    public static void main(String[] args) {
+        try {
+            int[] ints = new int[1];
+            ints[1] = 1;
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e){
 
+        }
+    }
+
+    public static void ReArrFill(RuntimeException re) {
+        for (int j = 0; j < 3; j++) {
+            for (int i = 0; i < reArr.length; i++) {
+                if (reArr[i] == null) {
+                    reArr[i] = re;
+                    break;
+                }
+            }
+        }
     }
 }
