@@ -68,6 +68,7 @@ public class MapTask {
                 " sometimes on purpose injected humour and the like";
         System.out.println(GroupByLettersAmount(text));
         TopWords(text);
+        LettersPercentage(text);
 
     }
 
@@ -165,7 +166,7 @@ public class MapTask {
         // TODO:
         //  3. написать метод, который выводит в консоль топ 10 самых частых слов
         HashMap<String, Integer> wordsCount = new HashMap<>();
-        ArrayList<String> topTen = new ArrayList<>();
+        LinkedList<String> topTen = new LinkedList<>();
         ArrayList<String> words = new ArrayList<>(Arrays.asList(text.toLowerCase().split(" ")));
         HashSet<String> uniqueWords = new HashSet<>();
         for (String word : words) {
@@ -182,19 +183,42 @@ public class MapTask {
         for (Map.Entry<String, Integer> entry : wordsCount.entrySet()) {
             sortedList.put(entry.getValue(), entry.getKey());
         }
-        for (int i = sortedList.size(); i > 0; i--) {
-            System.out.println(sortedList.get(i) + i);
+        for (int i = sortedList.size(), j = 10; i > 0; i--) {
+            for (Map.Entry<String, Integer> entry : wordsCount.entrySet()) {
+                if (entry.getValue().equals(i) && j > 0) {
+                    topTen.add(entry.getKey() + ": " + entry.getValue());
+                    j--;
+                }
+            }
         }
-
+        System.out.println(topTen);
     }
 
     public static void LettersPercentage(String text) {
-        String[] letters = text.toLowerCase().split("");
+        // TODO:
+        //  4. Вывести частоту встречаемости букв анг алфавита в данном тексте. Вывести в процентах для каждой буквы
+        String[] lettersFromText = text.toLowerCase().split("");
         HashMap<Character, Integer> lettersCount = new HashMap<>();
+        LinkedList<Character> chars = new LinkedList<>();
+        for (char i = 'a'; i <= 'z'; i++) {
+            chars.add(i);
+        }
+        for (Character aChar : chars) {
+            int count = 0;
+            for (String s : lettersFromText) {
+                if (s.equals(aChar.toString())) count++;
+            }
+            lettersCount.put(aChar, count);
+        }
+        int sum = 0;
+        for (Map.Entry<Character, Integer> entry : lettersCount.entrySet()) {
+            sum += entry.getValue();
+        }
+        for (Map.Entry<Character, Integer> entry : lettersCount.entrySet()) {
+            double percentage = entry.getValue()*100.0/sum;
+            System.out.println(entry.getKey() + ": " + percentage);
+        }
     }
-// TODO:: Задания по тексту (text). На каждый пункт - минимум один метод:
-//
-//  4. Вывести частоту встречаемости букв анг алфавита в данном тексте. Вывести в процентах для каждой буквы
 }
 
 class WordsByLenghtComparator implements Comparator<String> {
