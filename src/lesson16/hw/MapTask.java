@@ -179,11 +179,11 @@ public class MapTask {
             }
             wordsCount.put(uniqueWord, count);
         }
-        TreeMap<Integer, String> sortedList = new TreeMap<>();
+        int max = 0;
         for (Map.Entry<String, Integer> entry : wordsCount.entrySet()) {
-            sortedList.put(entry.getValue(), entry.getKey());
+            if (entry.getValue() > max) max = entry.getValue();
         }
-        for (int i = sortedList.size(), j = 10; i > 0; i--) {
+        for (int i = max, j = 10; i > 0; i--) {
             for (Map.Entry<String, Integer> entry : wordsCount.entrySet()) {
                 if (entry.getValue().equals(i) && j > 0) {
                     topTen.add(entry.getKey() + ": " + entry.getValue());
