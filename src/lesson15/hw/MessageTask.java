@@ -16,6 +16,12 @@ public class MessageTask {
             }
             System.out.println(priority + ": " + count);
         }
+
+
+        int[] counts = new int[MessagePriority.values().length];
+        for (Message message : messageList) {
+            counts[message.getPriority().ordinal()]++;
+        }
         /*int[] priorityCount = new int[priorities.length];
         for (Message message : messageList) {
             if (message.getPriority().equals(MessagePriority.LOW)) {
@@ -54,13 +60,25 @@ public class MessageTask {
             }
             System.out.println(code + ": " + count);
         }
+        HashMap<Integer, Integer> messageHashMap = new HashMap<>();
+        for (Message message : messageList) {
+            messageHashMap.put(message.getCode(), messageHashMap.getOrDefault(message.getCode(), 0) +1);
+        }
+        for (Message message : messageList) {
+            if (messageHashMap.containsKey(message.getCode())){
+                messageHashMap.put(message.getCode(), messageHashMap.get(message.getCode()) +1 );
+            }else {
+                messageHashMap.put(message.getCode(), 1);
+            }
+        }
     }
 
     private static void uniqueMessageCount(List<Message> messageList) {
         // TODO: Подсчитать количество уникальных сообщений
         //  Ответ в консоль
-        HashSet<Message> messageHashSet = new HashSet<>(messageList);
-        System.out.println("Уникальных: " + messageHashSet.size());
+        /*HashSet<Message> messageHashSet = new HashSet<>(messageList);
+        System.out.println("Уникальных: " + messageHashSet.size());*/
+        System.out.println("Уникальных: " + new HashSet<>(messageList).size());
     }
 
     public static List<Message> uniqueMessagesInOriginalOrder(List<Message> messageList) {
@@ -68,9 +86,10 @@ public class MessageTask {
         //  в котором они встретились в первоначальном списке
         //  Например, было: [{URGENT, 4}, {HIGH, 9}, {LOW, 3}, {HIGH, 9}]
         //  на выходе: [{URGENT, 4}, {HIGH, 9}, {LOW, 3}]
-        LinkedHashSet linkedHashSet = new LinkedHashSet(messageList);
+        /*LinkedHashSet linkedHashSet = new LinkedHashSet(messageList);
         messageList = new LinkedList<>(linkedHashSet);
-        return messageList;
+        return messageList;*/
+        return new ArrayList<>(new LinkedHashSet<>(messageList));
     }
 
     public static void removeEach(List<Message> messageList, MessagePriority priority) {

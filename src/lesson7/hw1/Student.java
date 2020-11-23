@@ -12,6 +12,11 @@ public class Student extends Plebeians implements StudyAble{
         this.studyLevel = studyLevel;
     }
 
+    public Student(String name, int age, String subject, int studyLevel) {
+        super(name, age, subject);
+        this.studyLevel = studyLevel;
+    }
+
     public int getStudyLevel() {
         return studyLevel;
     }

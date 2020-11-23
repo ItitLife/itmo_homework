@@ -2,6 +2,8 @@ package lesson7.hw1;
 
 final public class Director extends Human {
     static boolean day;
+    private Student[] saf;
+    private int[] ints;
     public Director() {
         super();
         age = this.age = 40 + (int) (Math.random() * 40);

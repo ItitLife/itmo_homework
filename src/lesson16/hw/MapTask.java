@@ -1,10 +1,5 @@
 package lesson16.hw;
 
-import additionalTasks.classesObjects.Tree;
-import javafx.scene.text.Text;
-
-import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.List;
 
@@ -102,17 +97,22 @@ public class MapTask {
         //  одинаковых слов с списке
         //  в виде Map<String, Integer>,
         //  где String - слово и Integer - количество повторений
-        HashSet<String> uniqueWords = new HashSet<>(list);
+        /*HashSet<String> uniqueWords = new HashSet<>(list);*/
         HashMap<String, Integer> map = new HashMap<>();
-        for (String uniqueWord : uniqueWords) {
+        /*for (String uniqueWord : uniqueWords) {
             int count = 0;
             for (String s : list) {
                 if (uniqueWord.equals(s)) count++;
             }
             map.put(uniqueWord, count);
         }
+        return map;*/
+        for (String s : list) {
+            map.put(s, map.getOrDefault(s, 0) + 1);
+        }
         return map;
     }
+
 
     public static Map<String, Customer> CustomerByAge(Map<String, Customer> map, int from, int to) {
         // TODO:: дана мапа (customerMap).
@@ -131,7 +131,8 @@ public class MapTask {
     public static int wordCounterInText(String text, String word) {
         // TODO:
         //  1. написать метод, принимающий на вход слово и возвращающий частоту встречаемости данного слова в тексте
-        ArrayList<String> words = new ArrayList<>(Arrays.asList(text.split(" ")));
+        //ArrayList<String> words = new ArrayList<>(Arrays.asList(text.split(" ")));
+        String[] words = text.split(" ");
         int count = 0;
         for (String s : words) {
             if (s.equals(word)) count++;
@@ -139,17 +140,17 @@ public class MapTask {
         return count;
     }
 
-    public static Map<Integer, List<String>> GroupByLettersAmount(String text) {
+    public static Map<Integer, Set<String>> GroupByLettersAmount(String text) {
         // TODO:
         //  2. написать метод, который собирает все слова в группы по количеству букв:
         //  например, в одну группу попадут слова: 3 - [the, war, jar, get, met...], в другую 2 - [on, up, no, of...]
-        TreeMap<Integer, List<String>> groupsByLettersAmount = new TreeMap<>();
-        LinkedList<String> words = new LinkedList<>(Arrays.asList(text.split(" ")));
-        Collections.sort(words, new WordsByLenghtComparator());
+        /*TreeMap<Integer, List<String>> groupsByLettersAmount = new TreeMap<>();
+        LinkedList<String> words = new LinkedList<>(Arrays.asList(text.toLowerCase().split(" ")));
+        Collections.sort(words, new WordsByLengthComparator());
         words.getLast().length();
         LinkedHashSet<String> uniqueWords = new LinkedHashSet<>();
         for (String word : words) {
-            uniqueWords.add(word.toLowerCase());
+            uniqueWords.add(word);
         }
         for (int i = words.getFirst().length(); i <= words.getLast().length(); i++) {
             groupsByLettersAmount.put(i, new ArrayList<String>());
@@ -159,13 +160,23 @@ public class MapTask {
                 if (word.length() == entry.getKey()) entry.getValue().add(word);
             }
         }
-        return groupsByLettersAmount;
+        return groupsByLettersAmount;*/
+        Map<Integer, Set<String>> map = new TreeMap<>();
+        String[] words = text.trim().toLowerCase().split(" ");
+        for (String word : words) {
+            Set<String> strings = map.getOrDefault(word.length(), new HashSet<>());
+            strings.add(word);
+            map.put(word.length(), strings);
+        }
+        return map;
+
+
     }
 
     public static void TopWords(String text) {
         // TODO:
         //  3. написать метод, который выводит в консоль топ 10 самых частых слов
-        HashMap<String, Integer> wordsCount = new HashMap<>();
+        /*HashMap<String, Integer> wordsCount = new HashMap<>();
         LinkedList<String> topTen = new LinkedList<>();
         ArrayList<String> words = new ArrayList<>(Arrays.asList(text.toLowerCase().split(" ")));
         HashSet<String> uniqueWords = new HashSet<>();
@@ -191,7 +202,15 @@ public class MapTask {
                 }
             }
         }
-        System.out.println(topTen);
+        System.out.println(topTen);*/
+        String[] words = text.trim().toLowerCase().split(" ");
+        HashMap<String, Integer> hashMap = new HashMap<>();
+        for (String word : words) {
+            hashMap.put(word, hashMap.getOrDefault(word, 0) + 1);
+        }
+        TreeSet<Map.Entry<String, Integer>> entries = new TreeSet<>(new WordsByCountComparator());
+        entries.addAll(hashMap.entrySet());
+
     }
 
     public static void LettersPercentage(String text) {
@@ -215,16 +234,24 @@ public class MapTask {
             sum += entry.getValue();
         }
         for (Map.Entry<Character, Integer> entry : lettersCount.entrySet()) {
-            double percentage = entry.getValue()*100.0/sum;
+            double percentage = entry.getValue() * 100.0 / sum;
             System.out.println(entry.getKey() + ": " + percentage);
         }
     }
 }
 
-class WordsByLenghtComparator implements Comparator<String> {
+class WordsByLengthComparator implements Comparator<String> {
 
     @Override
     public int compare(String s1, String s2) {
         return Integer.compare(s1.length(), s2.length());
+    }
+}
+
+class WordsByCountComparator implements Comparator<Map.Entry<String, Integer>> {
+    @Override
+    public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+        if (o1.getValue().equals(o2.getValue())) return -1;
+        return Integer.compare(o1.getValue(), o2.getValue());
     }
 }

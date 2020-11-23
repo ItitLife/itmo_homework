@@ -1,6 +1,6 @@
 package lesson7.hw1;
 
-abstract class Plebeians extends Human {
+public abstract class Plebeians extends Human {
     String subject;
 
     public Plebeians() {
@@ -8,4 +8,12 @@ abstract class Plebeians extends Human {
         this.subject = NamesAndSubjects.getSubject();
     }
 
+    public Plebeians(String name, int age, String subject) {
+        super(name, age);
+        this.subject = subject;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
 }
