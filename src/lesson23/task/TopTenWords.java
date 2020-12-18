@@ -25,7 +25,7 @@ public class TopTenWords {
         Map<String, Long> map = Files.lines(Paths.get("resources/lesson23_text.txt"))
                 .parallel()
                 .peek(string -> string.toLowerCase())
-                .flatMap(string -> Arrays.stream(string.split("[a-zA-Z]")))
+                .flatMap(string -> Arrays.stream(string.replace("[^A-Za-z]", " ").trim().split(" ")))
                 .filter(string -> !string.equals(""))
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                 .entrySet()
