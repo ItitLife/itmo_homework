@@ -1,0 +1,22 @@
+package exams.thirdFox.commands;
+
+import exams.thirdFox.stategy.SituationPerformer;
+
+public class SaveCommand implements Command {
+    SituationPerformer performer;
+    String title = "Save Game";
+
+    public SaveCommand(SituationPerformer performer) {
+        this.performer = performer;
+    }
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public void execute() {
+        SituationPerformer performer = new SituationPerformer();
+        performer.save();
+    }
+}
