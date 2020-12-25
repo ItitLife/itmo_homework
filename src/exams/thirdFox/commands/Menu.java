@@ -1,7 +1,5 @@
 package exams.thirdFox.commands;
 
-import exams.thirdFox.stategy.SituationPerformer;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

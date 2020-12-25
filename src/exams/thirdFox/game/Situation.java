@@ -1,4 +1,4 @@
-package exams.thirdFox.stategy;
+package exams.thirdFox.game;
 /**
  * @class contains info about situation
  */

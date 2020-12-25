@@ -1,6 +1,6 @@
 package exams.thirdFox.commands;
 
-import exams.thirdFox.stategy.SituationPerformer;
+import exams.thirdFox.game.SituationPerformer;
 
 public class StartNewCommand implements Command {
     String title = "New Game";

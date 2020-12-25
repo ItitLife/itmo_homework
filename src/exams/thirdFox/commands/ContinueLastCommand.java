@@ -1,37 +1,34 @@
 package exams.thirdFox.commands;
 
-import exams.thirdFox.stategy.SituationPerformer;
+import exams.thirdFox.game.SituationPerformer;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 public class ContinueLastCommand implements Command {
-    /*SituationPerformer performer;
-
-    public ContinueLastCommand(SituationPerformer performer) {
-        this.performer = performer;
-    }*/
-
     String title = "Load Game";
+    SituationPerformer performer = new SituationPerformer();
 
 
     @Override
     public void execute() {
         File file = new File("savedgame.txt");
+        String res;
         if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            System.out.println("There is no saves");
+            return;
         }
-        try (InputStream input = ContinueLastCommand.class.getClassLoader().getResourceAsStream("chat.properties")) {
-           // file.(input);
-
-        } catch (
-                IOException ioException) {
-            ioException.printStackTrace();
+        try {
+            try (FileInputStream inputStream = new FileInputStream(file);ByteArrayOutputStream byteArray = new ByteArrayOutputStream()) {
+                byte[] bytes = new byte[300];
+                int data;
+                while ((data = inputStream.read(bytes)) != -1) {
+                    byteArray.write(bytes, 0, data);
+                }
+                res = new String(byteArray.toByteArray());
+                performer.perform(res);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

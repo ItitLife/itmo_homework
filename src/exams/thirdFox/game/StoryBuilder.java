@@ -1,4 +1,4 @@
-package exams.thirdFox.stategy;
+package exams.thirdFox.game;
 
 import java.util.HashMap;
 
