@@ -4,6 +4,11 @@ import exams.thirdFox.game.SituationPerformer;
 
 public class StartNewCommand implements Command {
     String title = "New Game";
+    Menu menu;
+
+    public StartNewCommand(Menu menu) {
+        this.menu = menu;
+    }
 
     @Override
     public String getTitle() {
@@ -12,7 +17,7 @@ public class StartNewCommand implements Command {
 
     @Override
     public void execute() {
-        SituationPerformer performer = new SituationPerformer();
+        SituationPerformer performer = new SituationPerformer(menu);
         performer.perform("///");
     }
 }

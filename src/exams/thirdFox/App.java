@@ -7,6 +7,5 @@ public class App {
         Menu mainMenu = Menu.getMainMenu();
         mainMenu.printMenu();
         mainMenu.startMenu();
-
     }
 }

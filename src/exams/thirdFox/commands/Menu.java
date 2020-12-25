@@ -7,10 +7,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Menu {
-    HashMap<Integer, Command> commands;
+    private HashMap<Integer, Command> commands;
+    private boolean end = false;
+    private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public Menu() {
         this.commands = new HashMap<>();
+    }
+
+    public void end() {
+        this.end = true;
+        try {
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addCommand(Integer number, Command command) {
@@ -25,33 +36,32 @@ public class Menu {
 
     public static Menu getMainMenu() {
         Menu menu = new Menu();
-        menu.addCommand(1, new StartNewCommand());
-        menu.addCommand(2, new ContinueLastCommand());
-        menu.addCommand(3, new StopCommand());
+        menu.addCommand(1, new StartNewCommand(menu));
+        menu.addCommand(2, new LoadCommand(menu));
+        menu.addCommand(3, new StopCommand(menu));
         return menu;
     }
 
     public void startMenu() {
-
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-                while (true) {
-                    int answer = Integer.parseInt(reader.readLine());
-                    if (!commands.containsKey(answer)) {
-                        System.out.println("Command is not found");
-                        continue;
-                    }
-                    commands.get(answer).execute();
+        try {
+            while (!end) {
+                int answer = Integer.parseInt(reader.readLine());
+                if (!commands.containsKey(answer)) {
+                    System.out.println("Command is not found");
+                    continue;
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+                commands.get(answer).execute();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public HashMap<Integer, Command> getCommands() {
         return commands;
     }
 
-    public void clearMenu(){
+    public void clearMenu() {
         commands.clear();
     }
 }

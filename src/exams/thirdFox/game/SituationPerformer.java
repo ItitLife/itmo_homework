@@ -6,23 +6,30 @@ import exams.thirdFox.commands.StopCommand;
 import exams.thirdFox.commands.VariantCommand;
 
 
+import java.io.*;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class SituationPerformer {
     private HashMap<String, Situation> story = StoryBuilder.getStory();
-    Scanner scanner = new Scanner(System.in);
-    Menu menu = new Menu();
-    StopCommand exit = new StopCommand();
-    SaveCommand save = new SaveCommand(this);
+    private Menu menu;
+    private StopCommand exit;
+    private SaveCommand save;
+    private String currentTitle = "";
+
+    public SituationPerformer(Menu menu) {
+        this.menu = menu;
+        this.exit = new StopCommand(menu);
+        this.save = new SaveCommand(this);
+    }
 
     public void perform(String title) {
         if (title == null || title == "&?&") {
             System.out.println("Situation wasn't found. New game started.");
             title = "///";
         }
-        String newTitle = title;
-        Situation first = story.get(newTitle);
+        currentTitle = title;
+        Situation first = story.get(currentTitle);
         System.out.println(first.getTitle() + "\n");
         System.out.println(first.getDescription());
         menu.clearMenu();
@@ -32,20 +39,12 @@ public class SituationPerformer {
             for (int i = 0; i < vars.length; i++) {
                 VariantCommand newVar = new VariantCommand(this, getTitle(vars[i]));
                 menu.addCommand(i + 1, newVar);
-                /*System.out.print(i + 1);
-                System.out.println(" - " + newVar.getTitle());*/
-                /*System.out.print(i + 1);
-                System.out.println(" - " + vars[i]);*/
             }
         }
         menu.addCommand(menu.getCommands().size() + 1, save);
         menu.addCommand(menu.getCommands().size() + 1, exit);
         menu.printMenu();
         menu.startMenu();
-            /*int var = scanner.nextInt();
-            perform(getTitle(vars[var - 1]));*/
-
-
     }
 
     String getTitle(String var) {
@@ -60,8 +59,41 @@ public class SituationPerformer {
     }
 
     public void save() {
-
+        File file = new File("resources/savedgame.txt");
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try (FileWriter writer = new FileWriter(file, false)) {
+            writer.write(currentTitle);
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    public void load() {
+        try (FileReader reader = new FileReader("resources/savedgame.txt")) {
+            String title = "";
+            char[] buf = new char[256];
+            int c;
+            while ((c = reader.read(buf)) > 0) {
+                if (c < 256) {
+                    buf = Arrays.copyOf(buf, c);
+                }
+            }
+            StringBuilder stringBuilder = new StringBuilder();
+            for (char c1 : buf) {
+                stringBuilder.append(c1);
+            }
+            title = stringBuilder.toString();
+            this.perform(title);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
